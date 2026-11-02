@@ -1,0 +1,4 @@
+# Gizli değerler: Render Environment sekmesinde tanımlanır, repoya girmez
+.env
+.env.*
+!.env.example

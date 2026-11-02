@@ -1,15 +1,20 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const seedDemoData = require("./seed");
 
+const databaseConnect = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB bağlantısı başarılı");
+  } catch (error) {
+    console.error("MongoDB bağlantı hatası:", error);
+    return;
+  }
 
-const databaseConnect = async()=>{
-try {
-   await mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB bağlantısı başarılı"))
-  .catch((err) => console.error("MongoDB bağlantı hatası:", err));
-} catch (error) {
-    console.error('MongoDB bağlantı hatası:', error);
-}
-}
+  try {
+    await seedDemoData();
+  } catch (error) {
+    console.error("Demo verisi kurulamadı:", error);
+  }
+};
 
-
-module.exports = databaseConnect
+module.exports = databaseConnect;
